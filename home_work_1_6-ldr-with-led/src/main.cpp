@@ -159,6 +159,7 @@ uint32_t getLedDuty(const uint16_t raw) {
     retVal = minDutyLedLight;
   }
 
+  
   return retVal;
 }
 
@@ -245,4 +246,5 @@ void decreaseBaseLight() {
     // пересчитываем управляющие переменные
     ledLightSetup(requestedPercent);
   }
+
 }
