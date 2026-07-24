@@ -8,7 +8,7 @@
 #define INCREASE_BASE_LED_LIGH_PIN 5
 #define DECREASE_BASE_LED_LIGH_PIN 6
 #define DEBOUNCE_TIME 20
-// 
+
 uint8_t channel = 0;
 uint32_t freq = 5000;
 uint8_t resolution = 12;
@@ -65,7 +65,7 @@ volatile DebouncedBtn decreaseBtn = {
 };
 
 // FUNCTIONS
-uint32_t getLedDuty(uint16_t raw);
+uint32_t getLedDuty(uint16_t raw, uint32_t currentRaw);
 void ledLightSetup(uint8_t x);
 void increaseBaseLight();
 void decreaseBaseLight();
@@ -122,7 +122,9 @@ void loop() {
   float_t volts = analogReadMilliVolts(ADC_PIN) / 1000.0f;
   float_t percentage = raw / tresholdStep;
 
-  uint32_t ledDuty = getLedDuty(raw);
+  Serial.printf("ledcRead(channel) = %d, raw = %d \n", ledcRead(channel), raw);
+
+  uint32_t ledDuty = getLedDuty(raw, ledcRead(channel));
 
   // Serial.printf("ledDuty = %d \n", ledDuty);
   ledcWrite(channel, ledDuty);
@@ -133,7 +135,7 @@ void loop() {
   delay(300);
 }
 
-uint32_t getLedDuty(const uint16_t raw) {
+uint32_t getLedDuty(const uint16_t raw, uint32_t currentRaw) {
   uint32_t retVal = 0;
 
   // если raw больше чем максимальное значение которое можно повторить для LDR += 4000
@@ -155,10 +157,10 @@ uint32_t getLedDuty(const uint16_t raw) {
 
     // Serial.printf("raw > minRawValue = %d \n", retVal);
   }
-  else if (raw > maxRawHysteresis) {
+  // если уже ЛЕД горит и raw больше чем нижний порог гистерезиса
+  else if (currentRaw != 0 && raw > maxRawHysteresis) {
     retVal = minDutyLedLight;
   }
-
   
   return retVal;
 }
@@ -246,5 +248,4 @@ void decreaseBaseLight() {
     // пересчитываем управляющие переменные
     ledLightSetup(requestedPercent);
   }
-
 }
