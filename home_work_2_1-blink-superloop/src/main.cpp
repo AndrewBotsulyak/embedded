@@ -1,18 +1,39 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#include <config/config.h>
+#include <led/led.h>
+#include <button/button.h>
+#include <control/control.h>
+
+// VARIABLES
+LedADC LED(Config::LED_PIN, Config::ledADCOptions);
+Button leftButton(Config::LEFT_BTN);
+Button rightButton(Config::RIGHT_BTN);
+AppControl appControl(LED, leftButton, rightButton);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+
+  // initialize all logic for LED
+  LED.init();
+
+  // initialize all logic for buttons
+  leftButton.init();
+  rightButton.init();
+  pinMode(Config::LDR_PIN, OUTPUT);
+  digitalWrite(Config::LDR_PIN, HIGH);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  leftButton.handleChangeState();
+  rightButton.handleChangeState();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  if (LED.getMode() == LedMode::LDR) {
+    LED.handleLDRDuty(analogRead(Config::ADC_PIN));
+  }
+  else if (LED.getMode() == LedMode::BLINK) {
+    LED.handleBlink();
+  }
+
+  appControl.handleButtonsLogic();
 }
