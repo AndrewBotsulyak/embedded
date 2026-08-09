@@ -1,0 +1,25 @@
+{
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "idf.extensionActivationMode": "always",
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.port": "/dev/tty.usbmodem5C390163431",
+  "idf.currentSetup": "/Users/andrew/.espressif/v6.0.2/esp-idf",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "/Users/andrew/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=/Users/andrew/.espressif/tools/**",
+    "--compile-commands-dir=${workspaceFolder}/build",
+    "--header-insertion=never",
+    "--completion-style=detailed",
+    "--all-scopes-completion",
+    "--pch-storage=memory",
+    "-j=4"
+  ],
+  "clangd.onConfigChanged": "restart",
+  "idf.flashType": "UART"
+}
