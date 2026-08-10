@@ -1,5 +1,5 @@
 {
-  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.intelliSenseEngine": "default",
   "idf.extensionActivationMode": "always",
   "idf.openOcdConfigs": [
     "board/esp32s3-builtin.cfg"
@@ -13,8 +13,7 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=/Users/andrew/embedded/embedded-repo/home_work_2_5-adc-pwm/build"
+    "--compile-commands-dir=/Users/andrew/embedded/embedded-repo/home_work_module_2_traffic-light_with_traffic_controller/build"
   ],
-  "clangd.onConfigChanged": "restart",
   "idf.flashType": "UART"
 }
