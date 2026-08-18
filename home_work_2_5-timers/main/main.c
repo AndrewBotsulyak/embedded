@@ -8,6 +8,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+
 #define LED_PIN GPIO_NUM_10
 #define RESOULUTION_HZ 1000000
 #define ALARM_TRESHOLD 500000
@@ -66,7 +67,6 @@ void setup_timer() {
     ESP_ERROR_CHECK(gptimer_enable(gpTimerInstance));
     ESP_ERROR_CHECK(gptimer_start(gpTimerInstance));
 }
-
 
 void app_main(void)
 {
